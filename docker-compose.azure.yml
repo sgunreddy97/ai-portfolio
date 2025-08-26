@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  app:
+    image: YOUR_ACR_NAME.azurecr.io/ai-portfolio:prod
+    container_name: ai-portfolio
+    ports:
+      - "80:80"
+    environment:
+      # App settings (set sane defaults; we’ll override in Azure App Settings)
+      REDIS_URL: "redis://redis:6379/0"
+      # If your Flask app needs other secrets (OPENAI_API_KEY, JWT_SECRET, etc.),
+      # DO NOT hardcode here. We'll add them as App Settings in Azure.
+    depends_on:
+      - redis
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: ai-portfolio-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    restart: always
