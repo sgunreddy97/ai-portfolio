@@ -1,0 +1,51 @@
+# ---- Python / Flask ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+instance/
+.env
+.env.*
+backend/.env
+backend/*.db
+backend/portfolio.db
+backend/vectors.db*
+backend/*.pem
+backend/*.key
+
+# ---- Virtual Environments ----
+.venv/
+venv/
+ENV/
+env/
+
+# ---- Node / Frontend (if present) ----
+node_modules/
+dist/
+build/
+.cache/
+*.tsbuildinfo
+
+# ---- OS / Editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ---- Docker artifacts ----
+*.pid
+*.seed
+**/.docker-cache
+**/.dockerignore.local
+
+# ---- Coverage / tests ----
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ---- Misc ----
+*.bak
+*.tmp
+*.swp

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun & Games - Sai's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/games.css">
+</head>
+<body class="dark-mode">
+    <!-- Navigation -->
+    <nav class="navbar glassmorphism">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">STR</span>
+                <span class="logo-subtitle">AI/ML Engineer</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="main.html#home" class="nav-link">Home</a></li>
+                <li><a href="main.html#about" class="nav-link">About</a></li>
+                <li><a href="main.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="main.html#experience" class="nav-link">Experience</a></li>
+                <li><a href="main.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="main.html#hobbies" class="nav-link">Hobbies</a></li>
+                <li><a href="main.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="help-btn" onclick="showHelp()">
+                    <i class="fas fa-keyboard"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Games Container -->
+    <div class="games-page-container">
+        <div class="games-header">
+            <h1 class="gradient-text">Fun & Games Zone</h1>
+            <p class="subtitle">Challenge your mind with puzzles and classic games!</p>
+        </div>
+
+        <!-- Game Selection Grid -->
+        <div class="games-grid">
+            <!-- Space Invaders -->
+            <div class="game-card glassmorphism" onclick="launchGame('invaders')">
+                <div class="game-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3>Space Invaders</h3>
+                <p>Defend Earth from alien invasion!</p>
+                <div class="game-difficulty">
+                    <span class="difficulty-badge">Action</span>
+                </div>
+            </div>
+
+            <!-- Memory Matrix -->
+            <div class="game-card glassmorphism" onclick="launchGame('memory')">
+                <div class="game-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Memory Matrix</h3>
+                <p>Test your memory with patterns</p>
+                <div class="game-difficulty">
+                    <span class="difficulty-badge">Mind</span>
+                </div>
+            </div>
+
+            <!-- Math Challenge -->
+            <div class="game-card glassmorphism" onclick="launchGame('math')">
+                <div class="game-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h3>Math Challenge</h3>
+                <p>Solve math problems quickly!</p>
+                <div class="game-difficulty">
+                    <span class="difficulty-badge">Logic</span>
+                </div>
+            </div>
+
+            <!-- Pattern Recognition -->
+            <div class="game-card glassmorphism" onclick="launchGame('pattern')">
+                <div class="game-icon">
+                    <i class="fas fa-shapes"></i>
+                </div>
+                <h3>Pattern Master</h3>
+                <p>Complete the sequence</p>
+                <div class="game-difficulty">
+                    <span class="difficulty-badge">Puzzle</span>
+                </div>
+            </div>
+
+            <!-- Word Puzzle -->
+            <div class="game-card glassmorphism" onclick="launchGame('wordpuzzle')">
+                <div class="game-icon">
+                    <i class="fas fa-spell-check"></i>
+                </div>
+                <h3>Word Puzzle</h3>
+                <p>Find hidden words</p>
+                <div class="game-difficulty">
+                    <span class="difficulty-badge">Word</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <div class="leaderboard-section glassmorphism">
+            <h2><i class="fas fa-trophy"></i> High Scores</h2>
+            <div id="leaderboard-content">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Play Container (Full Screen) -->
+    <div id="game-play-container" class="game-play-container hidden">
+        <div class="game-header-bar">
+            <div class="game-stats">
+                <span class="stat-item"><i class="fas fa-star"></i> Score: <span id="current-score">0</span></span>
+                <span class="stat-item"><i class="fas fa-heart"></i> Lives: <span id="current-lives">3</span></span>
+                <span class="stat-item"><i class="fas fa-layer-group"></i> Level: <span id="current-level">1</span></span>
+                <span class="stat-item"><i class="fas fa-clock"></i> Time: <span id="game-timer">00:00</span></span>
+            </div>
+            <div class="game-controls-bar">
+                <button onclick="pauseGame()" title="Pause (P)"><i class="fas fa-pause"></i></button>
+                <button onclick="restartGame()" title="Restart (R)"><i class="fas fa-redo"></i></button>
+                <button onclick="toggleSound()" title="Sound"><i class="fas fa-volume-up"></i></button>
+                <button onclick="exitGame()" title="Exit (ESC)"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        
+        <canvas id="game-canvas"></canvas>
+        
+        <div id="game-paused" class="game-paused-overlay hidden">
+            <div class="paused-content">
+                <h2>Game Paused</h2>
+                <button onclick="resumeGame()">Resume</button>
+                <button onclick="restartGame()">Restart</button>
+                <button onclick="exitGame()">Exit to Menu</button>
+            </div>
+        </div>
+        
+        <div id="game-over" class="game-over-overlay hidden">
+            <div class="game-over-content">
+                <h2 id="game-over-title">Game Over!</h2>
+                <p class="final-score">Final Score: <span id="final-score">0</span></p>
+                <p class="high-score-message hidden">🎉 New High Score!</p>
+                <button onclick="restartGame()">Play Again</button>
+                <button onclick="exitGame()">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="help-modal hidden">
+        <div class="help-content glassmorphism">
+            <h2>Game Controls & Shortcuts</h2>
+            <div class="controls-grid">
+                <div class="control-section">
+                    <h3>Universal Controls</h3>
+                    <ul>
+                        <li><kbd>ESC</kbd> - Exit Game/Close Windows</li>
+                        <li><kbd>P</kbd> - Pause/Resume Game</li>
+                        <li><kbd>R</kbd> - Restart Game</li>
+                        <li><kbd>M</kbd> - Mute/Unmute Sound</li>
+                        <li><kbd>F</kbd> - Fullscreen</li>
+                    </ul>
+                </div>
+                <div class="control-section">
+                    <h3>Navigation Shortcuts</h3>
+                    <ul>
+                        <li><kbd>Ctrl</kbd> + <kbd>G</kbd> - Open Games</li>
+                        <li><kbd>Ctrl</kbd> + <kbd>K</kbd> - Open Chat</li>
+                        <li><kbd>Ctrl</kbd> + <kbd>H</kbd> - Go Home</li>
+                        <li><kbd>Ctrl</kbd> + <kbd>L</kbd> - Go to Landing</li>
+                    </ul>
+                </div>
+                <div class="control-section">
+                    <h3>Game Specific</h3>
+                    <ul>
+                        <li><strong>Space Invaders:</strong> Arrow Keys + Space</li>
+                        <li><strong>Memory/Puzzles:</strong> Mouse Click</li>
+                        <li><strong>Math Challenge:</strong> Number Keys or Click</li>
+                    </ul>
+                </div>
+            </div>
+            <button onclick="closeHelp()" class="close-help-btn">Got it!</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio-manager.js"></script>
+    <script src="js/games-enhanced.js"></script>
+    <!-- NEW: game previews script -->
+    <script src="js/game-previews.js"></script>
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHighScores();
+            
+            // Play page load sound
+            if (window.audioManager) {
+                window.audioManager.playSound('gameMenuOpen');
+            }
+
+            // NEW: initialize hover/preview animations for game cards
+            if (typeof initGamePreviews === 'function') {
+                initGamePreviews();
+            }
+        });
+
+        // Game launcher
+        function launchGame(gameType) {
+            if (window.enhancedGameManager) {
+                window.enhancedGameManager.launchGame(gameType);
+            }
+        }
+
+        // Game controls
+        function pauseGame() {
+            if (window.enhancedGameManager) {
+                window.enhancedGameManager.pauseGame();
+            }
+        }
+
+        function resumeGame() {
+            if (window.enhancedGameManager) {
+                window.enhancedGameManager.resumeGame();
+            }
+        }
+
+        function restartGame() {
+            if (window.enhancedGameManager) {
+                window.enhancedGameManager.restartGame();
+            }
+        }
+
+        function exitGame() {
+            if (window.enhancedGameManager) {
+                window.enhancedGameManager.exitGame();
+            }
+        }
+
+        function toggleSound() {
+            if (window.enhancedGameManager) {
+                window.enhancedGameManager.toggleSound();
+            }
+        }
+
+        // Load high scores
+        // Replace the loadHighScores function:
+        function loadHighScores() {
+            const leaderboard = document.getElementById('leaderboard-content');
+            if (!leaderboard) return;
+
+            const games = ['invaders', 'memory', 'math', 'pattern', 'wordpuzzle'];
+            let html = '<div class="scores-grid">';
+
+            games.forEach(game => {
+                const score = localStorage.getItem(`highScore_${game}`) || 0;
+                const gameName = game.charAt(0).toUpperCase() + game.slice(1);
+                html += `
+                    <div class="score-item">
+                        <span class="game-name">${gameName}</span>
+                        <span class="score-value">${score}</span>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            html += '<button onclick="resetAllHighScores()" style="margin-top: 20px; padding: 10px 20px; background: rgba(255, 107, 107, 0.2); border: 2px solid #ff6b6b; border-radius: 10px; color: white; cursor: pointer;">Reset All Scores</button>';
+            leaderboard.innerHTML = html;
+        }
+
+        // Add this new function:
+        function resetAllHighScores() {
+            if (confirm('Are you sure you want to reset all high scores?')) {
+                const games = ['invaders', 'memory', 'math', 'pattern', 'wordpuzzle'];
+                games.forEach(game => {
+                    localStorage.removeItem(`highScore_${game}`);
+                });
+                loadHighScores();
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey) {
+                switch(e.key) {
+                    case 'g':
+                        e.preventDefault();
+                        // Already on games page
+                        break;
+                    case 'k':
+                        e.preventDefault();
+                        window.location.href = 'main.html#chat';
+                        break;
+                    case 'h':
+                        e.preventDefault();
+                        window.location.href = 'main.html';
+                        break;
+                    case 'l':
+                        e.preventDefault();
+                        window.location.href = 'index.html';
+                        break;
+                }
+            }
+
+            if (e.key === 'Escape') {
+                if (!document.getElementById('help-modal').classList.contains('hidden')) {
+                    closeHelp();
+                } else if (!document.getElementById('game-play-container').classList.contains('hidden')) {
+                    exitGame();
+                }
+            }
+        });
+
+        function showHelp() {
+            document.getElementById('help-modal').classList.remove('hidden');
+            if (window.audioManager) {
+                window.audioManager.playSound('modalOpen');
+            }
+        }
+
+        function closeHelp() {
+            document.getElementById('help-modal').classList.add('hidden');
+            if (window.audioManager) {
+                window.audioManager.playSound('modalClose');
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            const icon = document.querySelector('.theme-toggle i');
+            if (icon) {
+                icon.className = document.body.classList.contains('dark-mode') ? 'fas fa-moon' : 'fas fa-sun';
+            }
+        }
+
+        // --------------------------------------
+        // Added per instructions (comprehensive keyboard controls)
+        // --------------------------------------
+        // Add comprehensive keyboard controls
+        document.addEventListener('keydown', (e) => {
+            // Game-specific controls
+            if (window.enhancedGameManager && window.enhancedGameManager.currentGame) {
+                const game = window.enhancedGameManager.currentGame;
+                
+                switch(e.key.toLowerCase()) {
+                    case 'p':
+                        e.preventDefault();
+                        if (window.enhancedGameManager.currentGame) {
+                            if (document.getElementById('game-paused').classList.contains('hidden')) {
+                                pauseGame();
+                            } else {
+                                resumeGame();
+                            }
+                        }
+                        break;
+                    case 'r':
+                        e.preventDefault();
+                        if (window.enhancedGameManager.currentGame) {
+                            restartGame();
+                        }
+                        break;
+                    case 'm':
+                        e.preventDefault();
+                        toggleSound();
+                        break;
+                    case 'escape':
+                        e.preventDefault();
+                        if (!document.getElementById('help-modal').classList.contains('hidden')) {
+                            closeHelp();
+                        } else if (!document.getElementById('game-play-container').classList.contains('hidden')) {
+                            exitGame();
+                        }
+                        break;
+                }
+            }
+            
+            // Navigation shortcuts (only when not in game)
+            if (!window.enhancedGameManager || !window.enhancedGameManager.currentGame) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key.toLowerCase()) {
+                        case 'g':
+                            e.preventDefault();
+                            // Already on games page
+                            break;
+                        case 'k':
+                            e.preventDefault();
+                            // Navigate to main page chat
+                            window.location.href = 'main.html';
+                            setTimeout(() => {
+                                if (window.aiAssistant) {
+                                    window.aiAssistant.open();
+                                }
+                            }, 500);
+                            break;
+                        case 'h':
+                            e.preventDefault();
+                            window.location.href = 'main.html#home';
+                            break;
+                        case 'l':
+                            e.preventDefault();
+                            window.location.href = 'index.html';
+                            break;
+                    }
+                }
+            }
+            
+            // Help shortcut (F1 or ?)
+            if (e.key === 'F1' || (e.key === '?' && e.shiftKey)) {
+                e.preventDefault();
+                showHelp();
+            }
+        });
+    </script>
+</body>
+</html>
