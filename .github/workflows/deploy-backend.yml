@@ -10,9 +10,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write   # for OIDC (recommended) OR use publish profile secret instead
-      contents: read
 
     steps:
       - name: Checkout
@@ -31,13 +28,11 @@ jobs:
 
       - name: Zip backend artifact
         working-directory: backend
-        run: |
-          zip -r ../backend.zip . -x '*.db' '*.faiss' '*.index' '*.meta' '*.docs' '*.env'
+        run: zip -r ../backend.zip . -x '*.db' '*.faiss' '*.index' '*.meta' '*.docs' '*.env'
 
-      # deploy with publish profile stored as repo secret
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ai-portfolio-backend              # <--- your app service name
+          app-name: ai-portfolio-backend
           package: backend.zip
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
