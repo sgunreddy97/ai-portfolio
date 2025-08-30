@@ -1,0 +1,24 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.3.1+cpu
+Flask==3.0.0
+flask-cors==4.0.0
+python-dotenv==1.0.0
+requests==2.31.0
+PyJWT==2.8.0
+numpy==1.24.3
+pandas==2.1.4
+#sqlite3-python==1.0.0
+bcrypt==4.1.2
+openai==1.6.1
+#sentence-transformers==2.2.2
+faiss-cpu==1.7.4
+tiktoken==0.5.2
+flask-limiter==3.5.0
+reportlab==4.0.8
+Pillow==10.2.0
+python-dateutil==2.8.2
+cryptography==41.0.7
+user-agents==2.2.0
+huggingface_hub>=0.34.0,<1.0
+sentence-transformers>=2.6.1
+gunicorn==21.2.0

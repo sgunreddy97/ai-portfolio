@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sai Teja Reddy - AI/ML Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Add this right after <body> tag in index.html -->
+    <script>
+        // Initialize audio immediately
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create click-to-start overlay for audio
+            const audioStartOverlay = document.createElement('div');
+            audioStartOverlay.id = 'audio-start-overlay';
+            audioStartOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 20000;
+                cursor: pointer;
+            `;
+            
+            audioStartOverlay.onclick = () => {
+                // Remove overlay
+                audioStartOverlay.remove();
+                
+                // Initialize and play audio
+                if (!window.audioManager) {
+                    window.audioManager = new AudioManager();
+                    window.audioManager.init();
+                }
+                
+                // Play landing sounds
+                setTimeout(() => {
+                    window.audioManager.playSound('landingPageLoad');
+                    window.audioManager.playSound('woosh');
+                }, 100);
+            };
+            
+            // Add overlay to page
+            document.body.appendChild(audioStartOverlay);
+        });
+    </script>
+
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="neural-network"></div>
+            <p>Initializing AI Experience...</p>
+        </div>
+    </div>
+
+    <div id="space-container"></div>
+    
+    <div class="landing-content">
+        <div class="glitch-wrapper">
+            <h1 class="glitch" data-text="SAI TEJA REDDY">SAI TEJA REDDY</h1>
+        </div>
+        
+        <div class="subtitle">
+            <span class="typed-text"></span>
+            <span class="cursor">|</span>
+        </div>
+
+        <div class="bio-preview glassmorphism">
+            <p>5+ Years of Experience • AI/ML Engineer • Deep Learning Enthusiast</p>
+            <p>Transforming Data into Intelligence • Building the Future with AI</p>
+        </div>
+
+        <div class="tech-stack-float">
+            <div class="tech-icon" data-tech="Python"><i class="fab fa-python"></i></div>
+            <div class="tech-icon" data-tech="TensorFlow"><i class="fas fa-brain"></i></div>
+            <div class="tech-icon" data-tech="AWS"><i class="fab fa-aws"></i></div>
+            <div class="tech-icon" data-tech="Docker"><i class="fab fa-docker"></i></div>
+            <div class="tech-icon" data-tech="Git"><i class="fab fa-git-alt"></i></div>
+        </div>
+
+        <button class="enter-portfolio" onclick="enterPortfolio()">
+            <span>Enter My Universe</span>
+            <div class="button-particles"></div>
+        </button>
+
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <p>Click on Enter My Universe</p>
+        </div>
+    </div>
+
+    <script src="js/audio-manager.js"></script>
+    <script src="js/landing.js"></script>
+</body>
+</html>

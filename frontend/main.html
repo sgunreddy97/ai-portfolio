@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sai Teja Reddy - AI/ML Engineer Portfolio</title>
+
+    <link rel="icon" href="data:,">
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("LRcGw1TZAKnDi-jAY");
+        })();
+    </script>
+</head>
+<body class="dark-mode">
+    <!-- Navigation -->
+    <nav class="navbar glassmorphism">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">STR</span>
+                <span class="logo-subtitle">AI/ML Engineer</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <!-- <li><a href="index.html" class="nav-link" data-section="landing">Landing</a></li> -->
+                <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
+                <li><a href="#experience" class="nav-link" data-section="experience">Experience</a></li>
+                <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+                <li><a href="#hobbies" class="nav-link" data-section="hobbies">Hobbies</a></li>
+                <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="chat-toggle" onclick="toggleChat()">
+                    <i class="fas fa-robot"></i>
+                    <span class="chat-badge">AI Twin</span>
+                </button>
+                <button class="nav-burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back to Landing -->
+    <a href="index.html" class="back-to-landing glassmorphism">
+        <i class="fas fa-rocket"></i>
+    </a>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="container">
+                <div class="home-hero">
+                    <div class="hero-content">
+                        <div class="hero-left">
+                            <div class="profile-image-container">
+                                <div class="profile-image glassmorphism">
+                                    <img src="assets/profile.jpg" alt="Sai Teja Reddy" onerror="this.style.display='none'">
+                                    <div class="profile-placeholder">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="profile-status">
+                                    <span class="status-dot"></span>
+                                    <span>Available for opportunities</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-right">
+                            <h1 class="hero-title">
+                                <span class="gradient-text">Sai Teja Reddy</span>
+                            </h1>
+                            <h2 class="hero-subtitle">AI/ML Engineer & Deep Learning Specialist</h2>
+                            
+                            <div class="hero-stats">
+                                <div class="stat-item glassmorphism">
+                                    <span class="stat-number" data-value="5">0</span>+
+                                    <span class="stat-label">Years Experience</span>
+                                </div>
+                                <div class="stat-item glassmorphism">
+                                    <span class="stat-number" data-value="50">0</span>+
+                                    <span class="stat-label">Projects Completed</span>
+                                </div>
+                                <div class="stat-item glassmorphism">
+                                    <span class="stat-number" data-value="15">0</span>+
+                                    <span class="stat-label">ML Models Deployed</span>
+                                </div>
+                            </div>
+                            
+                            <div class="hero-actions">
+                                <button class="btn btn-primary" onclick="downloadResume()">
+                                    <i class="fas fa-download"></i> Download Resume
+                                </button>
+                                <button class="btn btn-secondary" onclick="openChat()">
+                                    <i class="fas fa-comments"></i> Chat with AI Twin
+                                </button>
+                                <button class="btn btn-secondary" onclick="window.location.href='games.html'">
+                                    <i class="fas fa-gamepad"></i> Play Games
+                                </button>
+                            </div>
+                            
+                            <div class="social-links">
+                                <a href="https://linkedin.com/in/sai-teja-reddy-b5846322b" target="_blank" class="social-link">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="https://github.com/sgunreddy97" target="_blank" class="social-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="mailto:saitejareddyg97@gmail.com" class="social-link">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:+12488033210" class="social-link">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="gradient-text">About Me</span>
+                    <span class="title-line"></span>
+                </h2>
+                
+                <div class="about-content">
+                    <div class="about-text glassmorphism">
+                        <p class="lead">
+                            Passionate AI/ML Engineer with 5+ years of experience transforming complex data into intelligent solutions.
+                        </p>
+                        <p>
+                            I'm Sai Teja Reddy, an AI enthusiast who lives and breathes machine learning. With a strong mathematical foundation 
+                            (perfect scores throughout my academic journey) and hands-on experience at companies like Ericsson, I specialize 
+                            in building production-grade ML systems that solve real-world problems.
+                        </p>
+                        <p>
+                            My journey in AI isn't just about algorithms and models - it's about using technology to make a positive impact. 
+                            From developing speech recognition systems to fine-tuning LLMs, I approach every challenge with curiosity and 
+                            determination.
+                        </p>
+                        <p>
+                            Beyond code, I'm driven by a mission to democratize education. My goal is to adopt and educate 10 underprivileged 
+                            children, giving them the opportunities to thrive in our competitive world.
+                        </p>
+                    </div>
+                    
+                    <div class="about-highlights">
+                        <div class="highlight-card glassmorphism">
+                            <i class="fas fa-brain"></i>
+                            <h3>AI/ML Expertise</h3>
+                            <p>Deep experience with TensorFlow, PyTorch, and Hugging Face. Deployed 15+ models in production.</p>
+                        </div>
+                        <div class="highlight-card glassmorphism">
+                            <i class="fas fa-rocket"></i>
+                            <h3>Innovation Driver</h3>
+                            <p>Led AI initiatives at Ericsson, reducing query resolution time by 41% through LLM optimization.</p>
+                        </div>
+                        <div class="highlight-card glassmorphism">
+                            <i class="fas fa-heart"></i>
+                            <h3>Social Impact</h3>
+                            <p>Founded robotics club, organized village outreach programs, and helped fund a school.</p>
+                        </div>
+                        <div class="highlight-card glassmorphism">
+                            <i class="fas fa-trophy"></i>
+                            <h3>Top Performer</h3>
+                            <p>Consistently ranked in top 1% in national competitive exams with perfect math scores.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- My Journey Timeline -->
+                    <div class="about-timeline">
+                        <h3 class="timeline-title">My Journey</h3>
+                        <div class="timeline">
+                                                        
+                            <div class="timeline-item">
+                                <div class="timeline-date">2024-2025</div>
+                                <div class="timeline-content glassmorphism">
+                                    <h4><i class="fas fa-brain"></i> Master's in AI</h4>
+                                    <p>Oklahoma Christian University - Advancing expertise in AI</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-date">2022-2024</div>
+                                <div class="timeline-content glassmorphism">
+                                    <h4><i class="fas fa-robot"></i> ML Engineer</h4>
+                                    <p>Ericsson Canada - Led LLM initiatives, reduced query time by 41%</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-date">2021-2022</div>
+                                <div class="timeline-content glassmorphism">
+                                    <h4><i class="fas fa-chart-line"></i> Data Scientist</h4>
+                                    <p>Cash4You Inc. - Developed ML models reducing loan defaults by 23%</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-date">2020-2021</div>
+                                <div class="timeline-content glassmorphism">
+                                    <h4><i class="fas fa-user-graduate"></i> PG Diploma</h4>
+                                    <p>Conestoga College, Canada - Specialized in IT Business Analysis</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-date">2018-2019</div>
+                                <div class="timeline-content glassmorphism">
+                                    <h4><i class="fas fa-briefcase"></i> Data Analyst</h4>
+                                    <p>SanSah Innovations - First professional experience with data and analytics</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-date">2014-2018</div>
+                                <div class="timeline-content glassmorphism">
+                                    <h4><i class="fas fa-graduation-cap"></i> B.Tech in ECE</h4>
+                                    <p>JNTU Hyderabad - Built foundation in electronics and discovered passion for AI</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="gradient-text">Skills & Expertise</span>
+                    <span class="title-line"></span>
+                </h2>
+                
+                <div class="skills-content">
+                    <div class="skills-visualization">
+                        <h3>Technical Proficiency</h3>
+                        <div class="skills-bars">
+                            <div class="skill-bar-item">
+                                <div class="skill-header">
+                                    <span>Python</span>
+                                    <span>95%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="95"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar-item">
+                                <div class="skill-header">
+                                    <span>Machine Learning</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="90"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar-item">
+                                <div class="skill-header">
+                                    <span>Deep Learning</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="85"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar-item">
+                                <div class="skill-header">
+                                    <span>Cloud (AWS/GCP/Azure)</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="85"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar-item">
+                                <div class="skill-header">
+                                    <span>MLOps</span>
+                                    <span>80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="80"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-categories">
+                        <div class="skill-category glassmorphism">
+                            <h3><i class="fas fa-code"></i> Programming Languages</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">R</span>
+                                <span class="skill-tag">SQL</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">Shell</span>
+                                <span class="skill-tag">Bash</span>
+                                <span class="skill-tag">Node.js</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category glassmorphism">
+                            <h3><i class="fas fa-robot"></i> ML/AI Frameworks</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">TensorFlow</span>
+                                <span class="skill-tag">PyTorch</span>
+                                <span class="skill-tag">Hugging Face</span>
+                                <span class="skill-tag">Scikit-learn</span>
+                                <span class="skill-tag">LangChain</span>
+                                <span class="skill-tag">OpenAI API</span>
+                                <span class="skill-tag">Keras</span>
+                                <span class="skill-tag">SpaCy</span>
+                                <span class="skill-tag">NLTK</span>
+                                <span class="skill-tag">XGBoost</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category glassmorphism">
+                            <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">AWS</span>
+                                <span class="skill-tag">GCP</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">Kubernetes</span>
+                                <span class="skill-tag">MLflow</span>
+                                <span class="skill-tag">CI/CD</span>
+                                <span class="skill-tag">Azure DataLake</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category glassmorphism">
+                            <h3><i class="fas fa-database"></i> Data & Analytics</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Spark</span>
+                                <span class="skill-tag">Hadoop</span>
+                                <span class="skill-tag">Kafka</span>
+                                <span class="skill-tag">PostgreSQL</span>
+                                <span class="skill-tag">MongoDB</span>
+                                <span class="skill-tag">Tableau</span>
+                                <span class="skill-tag">MapReduce</span>
+                                <span class="skill-tag">Snowflake</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="gradient-text">Professional Experience</span>
+                    <span class="title-line"></span>
+                </h2>
+                
+                <div class="experience-content">
+                    <div class="experience-card glassmorphism">
+                        <div class="company-logo">
+                            <img src="assets/logos/ericsson.png" alt="Ericsson" onerror="this.style.display='none'">
+                            
+                        </div>
+                        <div class="experience-details">
+                            <h3>Machine Learning Engineer</h3>
+                            <h4>Ericsson Canada</h4>
+                            <span class="experience-period">Mar 2022 - Jul 2024</span>
+                            <span class="experience-location">Ottawa, Ontario, Canada</span>
+                            
+                            <ul class="experience-achievements">
+                                <li>Designed and deployed large-scale AI applications for telecom networks supporting 100M+ daily events</li>
+                                <li>Fine-tuned transformer-based LLMs reducing customer query resolution time by 41%</li>
+                                <li>Led integration of RAG with LangChain into internal knowledge platform</li>
+                                <li>Automated ML workflows via Airflow, reduced deployment time from 5 days to 6 hours</li>
+                            </ul>
+                            
+                            <div class="experience-tech">
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">TensorFlow</span>
+                                <span class="tech-badge">LangChain</span>
+                                <span class="tech-badge">AWS</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-card glassmorphism">
+                        <div class="company-logo">
+                            <img src="assets/logos/cash4you.png" alt="Cash4You" onerror="this.style.display='none'">
+                            
+                        </div>
+                        <div class="experience-details">
+                            <h3>Data Scientist</h3>
+                            <h4>Cash4You Inc.</h4>
+                            <span class="experience-period">Jun 2021 - Feb 2022</span>
+                            <span class="experience-location">Cambridge, Ontario, Canada</span>
+                            
+                            <ul class="experience-achievements">
+                                <li>Developed predictive credit scoring models reducing loan defaults by 23%</li>
+                                <li>Created real-time fraud detection API reducing fraud by 18%</li>
+                                <li>Engineered 70+ features from transactional and behavioral datasets</li>
+                                <li>Built dynamic dashboards in Tableau for loan performance monitoring</li>
+                            </ul>
+                            
+                            <div class="experience-tech">
+                                <span class="tech-badge">XGBoost</span>
+                                <span class="tech-badge">Flask</span>
+                                <span class="tech-badge">Tableau</span>
+                                <span class="tech-badge">Python</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="experience-card glassmorphism">
+                        <div class="company-logo">
+                            <img src="assets/logos/SanSah.png" alt="SanSah" onerror="this.style.display='none'">
+                            
+                        </div>
+                        <div class="experience-details">
+                            <h3>Data Analyst</h3>
+                            <h4>SanSah Innovations</h4>
+                            <span class="experience-period">Sept 2018 - Nov 2019</span>
+                            <span class="experience-location">Hyderabad, Telangana, India</span>
+                            
+                            <ul class="experience-achievements">
+                                <li>Collaborated with teams to model customer sales and operational data</li>
+                                <li>Developed Power BI dashboards for KPI tracking</li>
+                                <li>Built customer lifetime value models for targeted campaigns</li>
+                                <li>Automated reporting processes saving 8% time per quarter</li>
+                            </ul>
+                            
+                            <div class="experience-tech">
+                                <span class="tech-badge">Power BI</span>
+                                <span class="tech-badge">SQL</span>
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">Excel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="gradient-text">Featured Projects</span>
+                    <span class="title-line"></span>
+                </h2>
+                
+                <div class="projects-grid">
+                    <div class="project-card glassmorphism">
+                        <div class="project-header">
+                            <i class="fas fa-language"></i>
+                            <h3>LLM Classification Fine-Tuning</h3>
+                        </div>
+                        <p>Fine-tuned DistilBERT for binary classification of instruction prompts using Hugging Face Transformers.</p>
+                        <div class="project-tech">
+                            <span>Hugging Face</span>
+                            <span>PyTorch</span>
+                            <span>DistilBERT</span>
+                        </div>
+                        <div class="project-actions">
+                            <button onclick="viewProject('llm')">View Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card glassmorphism">
+                        <div class="project-header">
+                            <i class="fas fa-microphone"></i>
+                            <h3>Speech Recognition System</h3>
+                        </div>
+                        <p>Multilingual speech recognition pipeline combining Thai ASR and neural machine translation.</p>
+                        <div class="project-tech">
+                            <span>Wav2Vec2</span>
+                            <span>MarianMT</span>
+                            <span>Librosa</span>
+                        </div>
+                        <div class="project-actions">
+                            <button onclick="viewProject('speech')">View Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card glassmorphism">
+                        <div class="project-header">
+                            <i class="fas fa-star"></i>
+                            <h3>Amazon Review Sentiment</h3>
+                        </div>
+                        <p>Fine-tuned GPT-2 on Amazon reviews for sentiment analysis with LoRA optimization.</p>
+                        <div class="project-tech">
+                            <span>GPT-2</span>
+                            <span>LoRA</span>
+                            <span>PEFT</span>
+                        </div>
+                        <div class="project-actions">
+                            <button onclick="viewProject('amazon')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hobbies Section -->
+        <section id="hobbies" class="section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="gradient-text">Interests & Hobbies</span>
+                    <span class="title-line"></span>
+                </h2>
+                
+                <div class="hobbies-content">
+                    <div class="hobby-card glassmorphism">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Space & Technology</h3>
+                        <p>Fascinated by space exploration and the evolution of technology.</p>
+                    </div>
+                    
+                    <div class="hobby-card glassmorphism">
+                        <i class="fas fa-film"></i>
+                        <h3>Movies & Cinema</h3>
+                        <p>Passionate about exploring storytelling through film.</p>
+                    </div>
+                    
+                    <div class="hobby-card glassmorphism">
+                        <i class="fas fa-campground"></i>
+                        <h3>Camping & Nature</h3>
+                        <p>Love camping and outdoor adventures.</p>
+                    </div>
+                    
+                    <div class="hobby-card glassmorphism">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3>Teaching & Mentoring</h3>
+                        <p>Sharing knowledge and helping others grow.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="gradient-text">Get In Touch</span>
+                    <span class="title-line"></span>
+                </h2>
+                
+                <div class="contact-content">
+                    <div class="contact-info glassmorphism">
+                        <h3>Let's Connect!</h3>
+                        <p>I'm always interested in discussing AI/ML opportunities, innovative projects, or just having a tech chat!</p>
+                        
+                        <div class="contact-items">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:saitejareddyg97@gmail.com">saitejareddyg97@gmail.com</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+12488033210">+1 (248) 803-3210</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <a href="#">Edmond, Oklahoma, USA</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-linkedin"></i>
+                                <a href="https://linkedin.com/in/sai-teja-reddy-b5846322b" target="_blank">LinkedIn Profile</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-github"></i>
+                                <a href="https://github.com/sgunreddy97" target="_blank">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form glassmorphism">
+                        <h3>Send a Message</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="subject" placeholder="Subject" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" placeholder="Your Message" rows="6" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Chatbot -->
+    <!-- Enhanced Chatbot with Voice -->
+    <div id="chatbot" class="chatbot-container hidden">
+        <div class="chatbot-header glassmorphism">
+            <h3>AI Assistant</h3>
+            <div class="chatbot-controls">
+                <button onclick="aiAssistant.exportChat()" title="Export Chat">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button onclick="aiAssistant.clearChat()" title="Clear Chat">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <button class="mode-toggle" onclick="toggleChatMode()">
+                    <span id="mode-indicator">Strict Mode</span>
+                </button>
+                <button onclick="document.getElementById('chatbot').classList.toggle('maximized')" title="Maximize">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="close-btn" onclick="closeChat()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="chatbot-body">
+            <div id="chat-messages" class="chat-messages"></div>
+            
+            <div class="chat-suggestions">
+                <button class="suggestion" onclick="sendSuggestion('Tell me about Sai\'s experience')">
+                    <i class="fas fa-briefcase"></i> Experience
+                </button>
+                <button class="suggestion" onclick="sendSuggestion('What are Sai\'s key skills?')">
+                    <i class="fas fa-code"></i> Skills
+                </button>
+                <button class="suggestion" onclick="sendSuggestion('Why should we hire Sai?')">
+                    <i class="fas fa-star"></i> Why Hire
+                </button>
+            </div>
+        </div>
+        
+        <div class="chatbot-footer">
+            <div class="voice-settings">
+                <label class="voice-toggle">
+                    <input type="checkbox" id="voice-output-toggle">
+                    <span>Voice Output</span>
+                </label>
+            </div>
+            <div class="chat-input-container">
+                <button id="voice-btn" class="voice-btn" title="Voice Input">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <textarea id="chat-input" 
+                        placeholder="Ask about experience, skills, projects..." 
+                        rows="1"
+                        onkeypress="handleChatKeypress(event)"></textarea>
+                <button onclick="sendMessage()" title="Send Message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="chatbot" class="chatbot-container hidden">
+        <div class="chatbot-header glassmorphism">
+            <h3>Chat with My AI Twin</h3>
+            <div class="chatbot-controls">
+                <button class="mode-toggle" onclick="toggleChatMode()">
+                    <span id="mode-indicator">Strict Mode</span>
+                </button>
+                <button class="close-btn" onclick="closeChat()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="chatbot-body">
+            <div id="chat-messages" class="chat-messages"></div>
+            <div class="chat-suggestions">
+                <button class="suggestion" onclick="sendSuggestion('Tell me about Sai\\'s experience')">
+                    Experience
+                </button>
+                <button class="suggestion" onclick="sendSuggestion('What are Sai\\'s key skills?')">
+                    Skills
+                </button>
+                <button class="suggestion" onclick="sendSuggestion('Why should we hire Sai?')">
+                    Why Hire
+                </button>
+            </div>
+        </div>
+        
+        <div class="chatbot-footer">
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Ask about my experience, skills, or projects..." onkeypress="handleChatKeypress(event)">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Chat Button 
+    <button id="floating-chat-btn" class="floating-chat-btn" onclick="openChat()">
+        <i class="fas fa-robot"></i>
+        <span class="chat-pulse"></span>
+    </button>
+            -->
+
+    <!-- Floating help Button -->
+    <button id="floating-help-btn" class="floating-help-btn" onclick="showHelp()">
+        <i class="fas fa-info-circle"></i>
+    </button>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal hidden">
+        <div class="modal-content glassmorphism">
+            <span class="modal-close" onclick="closeProjectModal()">&times;</span>
+            <div id="project-detail-content"></div>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div id="game-container" class="game-container hidden">
+        <div class="game-menu glassmorphism">
+            <h3>Choose Your Game</h3>
+            <button onclick="startGame('invaders')">Space Invaders</button>
+            <button onclick="startGame('asteroids')">Asteroids</button>
+            <button onclick="closeGameMenu()">Close</button>
+        </div>
+        <canvas id="game-canvas"></canvas>
+        <div class="game-controls">
+            <span>Arrow Keys: Move | Space: Shoot | ESC: Exit</span>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="help-modal hidden">
+    <div class="help-content glassmorphism">
+        <h2>Keyboard Shortcuts & Help</h2>
+        <div class="shortcuts-grid">
+            <div class="shortcut-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><kbd>Ctrl</kbd> + <kbd>K</kbd> - Open Chat</li>
+                    <li><kbd>Ctrl</kbd> + <kbd>G</kbd> - Open Games</li>
+                    <li><kbd>Ctrl</kbd> + <kbd>H</kbd> - Go Home</li>
+                    <li><kbd>ESC</kbd> - Close Modal/Chat</li>
+                </ul>
+            </div>
+            <div class="shortcut-section">
+                <h3>Game Controls</h3>
+                <ul>
+                    <li><kbd>Arrow Keys</kbd> - Move</li>
+                    <li><kbd>Space</kbd> - Shoot/Select</li>
+                    <li><kbd>P</kbd> - Pause Game</li>
+                    <li><kbd>R</kbd> - Restart Game</li>
+                </ul>
+            </div>
+            <div class="shortcut-section">
+                <h3>Chat Controls</h3>
+                <ul>
+                    <li><kbd>Enter</kbd> - Send Message</li>
+                    <li><kbd>Shift + Enter</kbd> - New Line</li>
+                    <li><kbd>Ctrl + L</kbd> - Clear Chat</li>
+                    <li><kbd>Ctrl + E</kbd> - Export Chat</li>
+                </ul>
+            </div>
+        </div>
+        <button onclick="closeHelp()" class="close-help-btn">Got it!</button>
+    </div>
+</div>
+
+    <!-- Scripts -->
+    <script src="js/audio-manager.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Set API base for production (update after backend is deployed) -->
+    <script>
+    // For production, set the App Service URL here.
+    // Example (we will fill the real value after we create the backend):
+    // window.__API_BASE__ = 'https://<YOUR-BACKEND-NAME>.azurewebsites.net';
+    //
+    // For local dev, leave it commented out and your JS will fall back to http://localhost:5000
+    </script>
+
+
+    <script>
+    window.__API_BASE__ = 'https://ai-portfolio-backend.azurewebsites.net';
+    </script>
+
+    <script src="js/chatbot.js" defer></script>
+    <script src="js/games.js"></script>
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/chatbot-enhanced.css">
+
+</body>
+</html>
