@@ -1,9 +1,9 @@
 {
   "routes": [
     {
-      "route": "/api/{*path}",
+      "route": "/api/*",
       "allowedRoles": ["anonymous"],
-      "rewrite": "https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/{path}"
+      "rewrite": "https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/"
     }
   ],
   "navigationFallback": {
