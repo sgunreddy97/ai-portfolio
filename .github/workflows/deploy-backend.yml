@@ -15,24 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+      - name: (Optional) Lint requirements exist
+        run: test -f backend/requirements.txt
 
-      - name: Install deps
-        working-directory: backend
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Zip backend artifact
-        working-directory: backend
-        run: zip -r ../backend.zip . -x '*.db' '*.faiss' '*.index' '*.meta' '*.docs' '*.env'
-
-      - name: Deploy to Azure Web App
+      # We DO NOT zip. We let Azure build from the backend folder.
+      - name: Deploy to Azure Web App (with Oryx build)
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ai-portfolio-backend
-          package: backend.zip
+          app-name: ai-portfolio-backend     # exact App Service name (no suffix)
+          package: backend                   # send the folder, not a zip
+          enable-oryx-build: true            # tell Kudu to run Oryx (pip install)
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
