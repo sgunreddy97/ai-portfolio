@@ -6,9 +6,9 @@
       "rewrite": "https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/health"
     },
     {
-      "route": "/api/{*rest}",
+      "route": "/api/*",
       "allowedRoles": ["anonymous"],
-      "rewrite": "https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/{rest}"
+      "rewrite": "https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/:splat"
     }
   ],
   "navigationFallback": {
