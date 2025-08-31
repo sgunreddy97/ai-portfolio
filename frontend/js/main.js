@@ -363,7 +363,7 @@ async function handleContactSubmit(e) {
         };
         
         // Send to backend instead of EmailJS
-        const response = await fetch('http://localhost:5000/api/contact', {
+        const response = await fetch('/api/contact', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -722,7 +722,7 @@ function showNotification(message, type = 'info') {
 // ANALYTICS TRACKING
 // ============================================
 function trackPageView(page) {
-    fetch('http://localhost:5000/api/track', {
+    fetch('/api/track', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -736,7 +736,7 @@ function trackPageView(page) {
 }
 
 function trackInteraction(action, element) {
-    fetch('http://localhost:5000/api/track', {
+    fetch('/api/track', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

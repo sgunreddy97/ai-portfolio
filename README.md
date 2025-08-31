@@ -76,13 +76,13 @@ By default, it will point to http://localhost:5000 for API requests.
 
 🌐 Deployment
 
-Backend
+Backend:
 
 GitHub Actions → Deploys to Azure App Service.
 
 Secrets pulled securely from Key Vault.
 
-Frontend
+Frontend:
 
 GitHub Actions → Deploys to Azure Static Web Apps.
 
