@@ -1,7 +1,7 @@
 // Enhanced AI Chatbot with Backend Integration
 class AIAssistant {
     constructor() {
-        this.backendUrl = (window.__API_BASE__ || (window.location.origin.includes('://localhost') ? 'http://localhost:5000' : window.location.origin));
+        this.backendUrl = 'https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net';
         this.sessionId = this.generateSessionId();
         this.mode = 'strict';
         this.voiceEnabled = false;
