@@ -4,37 +4,30 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'frontend/**'
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches: [ main ]
+      - "frontend/**"
+      - ".github/workflows/deploy-frontend.yml"
+      - "frontend/staticwebapp.config.json"
   workflow_dispatch:
 
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
-    name: Build and Deploy
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Use Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install deps & build (Vite)
-        working-directory: frontend
+      # No build: copy raw static files to build/
+      - name: Prepare static site
         run: |
-          npm ci
-          npm run build
+          rm -rf build
+          mkdir build
+          cp -r frontend/* build/
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
+          # IMPORTANT: this matches the secret you already have
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ZEALOUS_WATER_0E09CAD0F }}
           action: "upload"
-          app_location: "frontend/dist"     # upload the built files
-          output_location: ""               # (not used for upload)
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          app_location: "build"
+          output_location: ""
