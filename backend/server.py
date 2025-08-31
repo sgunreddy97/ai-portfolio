@@ -44,25 +44,8 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
-
-# More comprehensive CORS configuration
-CORS(app, 
-     origins=["*"],
-     allow_headers=["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
-     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-     supports_credentials=True,
-     max_age=3600)
-
-# Also add this explicit OPTIONS handler for preflight requests
-@app.before_request
-def handle_preflight():
-    if request.method == "OPTIONS":
-        response = make_response()
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
-        response.headers.add("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-        return response
-
+# Simple CORS configuration - let Flask-CORS handle everything
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 # Rate limiting
 limiter = Limiter(
     app=app,
