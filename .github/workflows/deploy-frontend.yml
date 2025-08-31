@@ -12,12 +12,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      SWA_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 🔎 DIAGNOSTIC: make sure the secret is present and not mangled
+      - name: Assert token is present and sane (temporary)
+        shell: bash
+        run: |
+          if [ -z "$SWA_TOKEN" ]; then
+            echo "❌ Secret AZURE_STATIC_WEB_APPS_API_TOKEN is EMPTY or not visible to this workflow"
+            exit 1
+          fi
+          echo "✅ Secret is present"
+          echo -n "$SWA_TOKEN" | wc -c | awk '{print "Token length:", $1}'
+          echo -n "$SWA_TOKEN" | sha256sum | cut -c1-8 | awk '{print "Token sha256/8:", $1}'
+
       # No build: copy raw static files to build/
       - name: Prepare static site
+        shell: bash
         run: |
           rm -rf build
           mkdir -p build
@@ -30,3 +45,4 @@ jobs:
           action: "upload"
           app_location: "build"
           output_location: ""
+        
