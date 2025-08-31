@@ -363,7 +363,7 @@ async function handleContactSubmit(e) {
         };
         
         // Send to backend instead of EmailJS
-        const response = await fetch('/api/contact', {
+        const response = await fetch('https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/contact', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -722,7 +722,7 @@ function showNotification(message, type = 'info') {
 // ANALYTICS TRACKING
 // ============================================
 function trackPageView(page) {
-    fetch('/api/track', {
+    fetch('https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/track', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -736,7 +736,7 @@ function trackPageView(page) {
 }
 
 function trackInteraction(action, element) {
-    fetch('/api/track', {
+    fetch('https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/track', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
