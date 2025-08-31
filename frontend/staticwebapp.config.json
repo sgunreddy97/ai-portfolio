@@ -1,18 +1,18 @@
 {
   "routes": [
     {
-      "route": "/api/*",
+      "route": "/api/health",
       "allowedRoles": ["anonymous"],
-      "rewrite": "https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/"
+      "rewrite": "https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/health"
+    },
+    {
+      "route": "/api/{*rest}",
+      "allowedRoles": ["anonymous"],
+      "rewrite": "https://ai-portfolio-backend-abgwf4e6gvckbref.eastus2-01.azurewebsites.net/api/{rest}"
     }
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": ["/api/*"]
-  },
-  "globalHeaders": {
-    "X-Frame-Options": "DENY",
-    "X-Content-Type-Options": "nosniff",
-    "Referrer-Policy": "strict-origin-when-cross-origin"
   }
 }
