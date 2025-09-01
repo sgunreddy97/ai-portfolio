@@ -249,13 +249,14 @@ body {
 
 /* Scroll Indicator */
 .scroll-indicator {
-    display: flex;        
-    flex-direction: column;  
-    align-items: center;  
-    justify-content: center;
-    margin-top: 24px;         
-    animation: bounce 2s infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;          
+    margin: 24px auto 0;   
+    width: fit-content;    
     text-align: center;
+    animation: bounce 2s infinite;
 }
 
 .mouse {
