@@ -249,8 +249,10 @@ body {
 
 /* Scroll Indicator */
 .scroll-indicator {
-    position: static;
+    position: relative;
     margin-top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
     animation: bounce 2s infinite;
 }
