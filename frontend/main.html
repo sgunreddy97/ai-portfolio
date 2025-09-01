@@ -683,44 +683,6 @@
         </div>
     </div>
 
-    <div id="chatbot" class="chatbot-container hidden">
-        <div class="chatbot-header glassmorphism">
-            <h3>Chat with My AI Twin</h3>
-            <div class="chatbot-controls">
-                <button class="mode-toggle" onclick="toggleChatMode()">
-                    <span id="mode-indicator">Strict Mode</span>
-                </button>
-                <button class="close-btn" onclick="closeChat()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        </div>
-        
-        <div class="chatbot-body">
-            <div id="chat-messages" class="chat-messages"></div>
-            <div class="chat-suggestions">
-                <button class="suggestion" onclick="sendSuggestion('Tell me about Sai\\'s experience')">
-                    Experience
-                </button>
-                <button class="suggestion" onclick="sendSuggestion('What are Sai\\'s key skills?')">
-                    Skills
-                </button>
-                <button class="suggestion" onclick="sendSuggestion('Why should we hire Sai?')">
-                    Why Hire
-                </button>
-            </div>
-        </div>
-        
-        <div class="chatbot-footer">
-            <div class="chat-input-container">
-                <input type="text" id="chat-input" placeholder="Ask about my experience, skills, or projects..." onkeypress="handleChatKeypress(event)">
-                <button onclick="sendMessage()">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Floating Chat Button 
     <button id="floating-chat-btn" class="floating-chat-btn" onclick="openChat()">
         <i class="fas fa-robot"></i>
