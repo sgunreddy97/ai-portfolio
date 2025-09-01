@@ -139,19 +139,30 @@ class IntelligentChatbot:
             is_more_request = self._is_more_details_request(message)
             
             if is_more_request and self.conversation_context[session_id]['last_full_response']:
-                # Return the detailed version
-                return {
-                    'response': self.conversation_context[session_id]['last_full_response'],
-                    'suggestions': self.get_smart_suggestions(
-                        self.conversation_context[session_id]['last_query'], 
-                        'detailed', 
-                        mode
-                    ),
-                    'intent': 'detailed',
-                    'confidence': 0.95,
-                    'mode': mode,
-                    'show_more_button': False
-                }
+                # Save and return the detailed version
+                 _full = self.conversation_context[session_id]['last_full_response']
+                 sentiment = self.analyze_sentiment(message)
+                 topics = self.extract_topics(message)
+                 db.save_conversation(
+                     session_id=session_id,
+                     user_message=message,
+                     bot_response=_full,
+                     mode=mode,
+                     sentiment=sentiment,
+                     topics=topics
+                 )
+                 return {
+                     'response': _full,
+                     'suggestions': self.get_smart_suggestions(
+                         self.conversation_context[session_id]['last_query'], 
+                         'detailed', 
+                         mode
+                     ),
+                     'intent': 'detailed',
+                     'confidence': 0.95,
+                     'mode': mode,
+                     'show_more_button': False
+                 }
             
             # Regular processing for new queries
             # 1. Intent Classification
@@ -206,7 +217,7 @@ class IntelligentChatbot:
             db.save_conversation(
                 session_id=session_id,
                 user_message=message,
-                bot_response=brief_response if not detailed else full_response,
+                bot_response=full_response,
                 mode=mode,
                 sentiment=sentiment,
                 topics=topics
