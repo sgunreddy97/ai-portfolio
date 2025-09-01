@@ -696,28 +696,5 @@ ${toTemplateSafe(conv.bot_response)}
             }
     </script>
     <div id="threadContainer" class="data-section" style="display:none; margin: 20px 0;"></div>
-    <style>
-    /* === Admin Full-Text Override ===
-        Show full messages in tables and threads (no truncation/clamp/ellipsis). */
-    .truncate,
-    .line-clamp-2,
-    .line-clamp-3,
-    .line-clamp-6,
-    .ellipsis,
-    .clamp,
-    .message-text,
-    td,
-    .conversation-cell,
-    .thread-message {
-        white-space: pre-wrap !important;    /* keep line breaks, wrap long lines */
-        overflow: visible !important;        /* no hidden overflow */
-        text-overflow: clip !important;      /* no ellipsis */
-        word-break: break-word !important;   /* wrap long tokens/URLs */
-        display: block !important;           /* neutralize -webkit-box clamps */
-        max-height: none !important;
-        -webkit-line-clamp: unset !important;
-        -webkit-box-orient: unset !important;
-    }
-    </style>
 </body>
 </html>
