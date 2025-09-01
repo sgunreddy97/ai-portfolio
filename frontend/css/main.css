@@ -11,6 +11,12 @@
     --light-text: #333333;
     --card-bg-dark: rgba(0, 0, 0, 0.5);
     --card-bg-light: rgba(255, 255, 255, 0.9);
+
+    /* iPhone safe-area (works everywhere else too; falls back to 0px) */
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
 }
 
 * {
@@ -1270,6 +1276,57 @@ body.light-mode .modal-content {
 }
 
 @media (max-width: 768px) {
+    /* keep the glass navbar off the screen edges on phones */
+    .navbar {
+    /* center the bar and give it 12px margin on both sides */
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 24px);
+    padding-top: calc(var(--safe-top) + 8px);  /* safe top inset + breathing room */
+    border-radius: 16px;                       /* preserve rounded look */
+    }
+
+    /* the inner container spacing */
+    .nav-container {
+    padding: 0 12px;
+    }
+
+    /* prevent any sideways scroll on phones */
+    html, body { overflow-x: hidden; }
+
+    /* timeline: 1-column with a comfortable left rail */
+    .timeline { padding-left: 22px; }
+    .timeline::before { left: 22px !important; }
+    .timeline-item { 
+    flex-direction: column !important; 
+    align-items: flex-start !important; 
+    margin-left: 44px;                          /* shifts cards away from the left edge */
+    }
+    .timeline-item::after { left: 22px !important; }
+    .timeline-content { width: 100%; }
+
+    /* project/hobby grids on phones */
+    .projects-grid   { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .hobbies-content { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+
+    /* floating “i” button (help/info) inset from edges & notch */
+    .floating-help-btn {
+    right: max(16px, var(--safe-right));
+    bottom: max(16px, var(--safe-bottom));
+    }
+
+    /* modal content: phone-friendly width & padding; close button inset */
+    .modal-content {
+    width: min(92vw, 640px);
+    padding: 24px;
+    border-radius: 18px;
+    }
+    .modal-close { top: 12px; right: 12px; }
+
+    /* section container inner padding on phones */
+    .container { padding-left: 16px; padding-right: 16px; }
+
     .nav-menu {
         position: fixed;
         top: 60px;
@@ -1469,119 +1526,29 @@ body.light-mode .modal-content {
     transform: scale(1.05);
 }
 
-/* ======== Responsive: phones & small tablets (global polish) ======== */
+/* Phone scaling for landing hero only */
 @media (max-width: 768px) {
-  /* Tighter vertical rhythm */
-  .section { padding: 60px 0; }
-  .container { padding: 0 16px; }
-
-  /* Section titles and hero text scale safely */
-  .gradient-text { font-size: clamp(28px, 9vw, 40px); line-height: 1.1; text-align: center; }
-  .hero-title   { font-size: clamp(20px, 6.5vw, 28px); line-height: 1.2; text-align: center; }
-  .hero-subtitle{ font-size: clamp(15px, 4.6vw, 19px); line-height: 1.35; text-align: center; }
-
-  /* About/Skills grids already go 1-col at <=1024; tighten gaps on phones */
-  .about-content, .skills-content, .contact-content { gap: 20px; }
-
-  /* Projects & Hobbies cards: never overflow on narrow screens */
-  .projects-grid      { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .project-card       { padding: 22px; }
-  .hobbies-content    { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-
-  /* Back-to-landing rocket: smaller so it doesn’t crowd the navbar */
-  .back-to-landing { top: 80px; left: 12px; width: 44px; height: 44px; }
-
-  /* Absolutely no sideways scrollbars */
-  html, body { overflow-x: hidden; }
-}
-
-@media (max-width: 480px) {
-  /* Single column on very narrow devices */
-  .projects-grid   { grid-template-columns: 1fr; }
-  .hobbies-content { grid-template-columns: 1fr; }
-
-  /* Slightly smaller headings/buttons for tiny phones */
-  .gradient-text { font-size: clamp(24px, 10vw, 34px); }
-  .hero-title    { font-size: clamp(18px, 7vw, 24px); }
-  .hero-subtitle { font-size: clamp(14px, 4.8vw, 18px); }
-
-  /* Comfortable buttons on tiny screens */
-  .hero-actions .btn { padding: 10px 16px; font-size: 0.95rem; }
-}
-
-/* ======== Mobile polish: safe areas, spacing, grids, modals ======== */
-:root{
-  /* use iOS safe area if available; fall back to sensible defaults */
-  --safe-top: max(env(safe-area-inset-top, 0px), 12px);
-  --safe-right: max(env(safe-area-inset-right, 0px), 12px);
-  --safe-bottom: max(env(safe-area-inset-bottom, 0px), 12px);
-  --safe-left: max(env(safe-area-inset-left, 0px), 12px);
-}
-
-@media (max-width: 768px) {
-  /* 1) Header / navbar: pad away from the notch & edges */
-  header, .site-header, .navbar, .top-nav, [class*="nav"][class*="bar"] {
-    padding-top: var(--safe-top);
-    padding-right: var(--safe-right);
-    padding-left: var(--safe-left);
-    box-sizing: border-box;
+  #home h1, .hero h1, .main-title, .title, .name-title, h1 {
+    font-size: clamp(36px, 10vw, 96px);
+    line-height: 1.05;
+    text-align: center;
   }
-
-  /* keep header actions from touching edges */
-  .header-actions, .nav-actions, .navbar-actions, .top-actions {
-    gap: 10px;
-    padding-right: var(--safe-right);
+  .subtitle, .typed, .typed-text, #typed-text, h2 {
+    font-size: clamp(16px, 4.5vw, 22px);
+    line-height: 1.25;
+    text-align: center;
   }
-
-  /* 2) Global: kill horizontal scroll on phones */
-  html, body {
-    overflow-x: hidden;
+  .summary, .tagline, .intro-banner, .hero-card, .summary-box {
+    max-width: min(92vw, 680px);
+    margin-left: auto;
+    margin-right: auto;
+    padding: clamp(12px, 3.5vw, 20px) clamp(14px, 4vw, 22px);
   }
-
-  /* 3) Timeline: give breathing room on the left so dots/line aren't cut */
-  .timeline, [class*="timeline"] {
-    padding-left: 20px;
-    position: relative;
+  .enter-portfolio {
+    width: min(88vw, 340px);
+    font-size: clamp(14px, 4.2vw, 18px);
+    border-radius: 28px;
+    margin-left: auto; margin-right: auto;
   }
-  /* common pseudo-lines & dots, adjusted inward a bit */
-  .timeline::before, [class*="timeline"]::before { left: 12px !important; }
-  .timeline .dot, [class*="timeline"] .dot { left: 12px !important; }
-
-  /* 4) Project / feature cards: ensure the round info FAB isn't on the edge */
-  .project-card, .feature-card, .card {
-    position: relative;             /* so absolute children use this as anchor */
-  }
-  .info-fab, .info-btn, .info-button, .card .info {
-    position: absolute;
-    right: max(12px, var(--safe-right));
-    bottom: max(12px, var(--safe-bottom));
-  }
-
-  /* 5) Grids: healthy columns on phones */
-  .projects-grid      { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .hobbies-content    { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-
-  /* 6) Modals / drawers: safe padding so text/buttons don't hug edges */
-  .modal, .project-modal, .project-details, .dialog, .sheet {
-    padding: max(16px, var(--safe-top)) max(16px, var(--safe-right))
-             max(16px, var(--safe-bottom)) max(16px, var(--safe-left));
-  }
-  .modal .dialog, .project-modal .dialog, .project-details .dialog {
-    width: min(92vw, 640px);
-    margin: 0 auto;
-    border-radius: 18px;
-  }
-  .modal-close, .dialog-close, .close-btn, .project-modal .close {
-    top: 12px; right: 12px;
-  }
-
-  /* 7) Section containers: consistent inner padding */
-  .section { padding: 56px 0; }
-  .container { padding-left: 16px; padding-right: 16px; }
-}
-
-@media (max-width: 480px) {
-  /* narrower phones: single column grids */
-  .projects-grid   { grid-template-columns: 1fr; }
-  .hobbies-content { grid-template-columns: 1fr; }
+  .scroll-indicator { margin-top: 16px; gap: 6px; }
 }
