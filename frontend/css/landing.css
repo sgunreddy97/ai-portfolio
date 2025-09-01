@@ -312,3 +312,62 @@ body {
         font-size: 1rem;
     }
 }
+
+/* ======== Responsive: phones & small tablets ======== */
+@media (max-width: 768px) {
+  /* Big title + typed line: scale cleanly without overflow */
+  /* This grouped selector is non-destructive: it targets whichever exists */
+  #home h1, .hero h1, .main-title, .title, .name-title, h1 {
+    font-size: clamp(36px, 10vw, 96px);
+    line-height: 1.05;
+    text-align: center;
+    word-break: keep-all;
+  }
+
+  .subtitle, .typed, .typed-text, #typed-text, h2 {
+    font-size: clamp(16px, 4.5vw, 22px);
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  /* The dark summary box under the title */
+  .summary, .tagline, .intro-banner, .hero-card, .summary-box {
+    max-width: min(92vw, 680px);
+    margin-left: auto;
+    margin-right: auto;
+    padding: clamp(12px, 3.5vw, 20px) clamp(14px, 4vw, 22px);
+    box-sizing: border-box;
+  }
+
+  /* CTA button: sized for thumbs, never off-screen */
+  .enter-portfolio {
+    width: min(88vw, 340px);
+    padding: 14px 20px;
+    font-size: clamp(14px, 4.2vw, 18px);
+    border-radius: 28px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Scroll indicator: tighter spacing on phones (we already centered it) */
+  .scroll-indicator {
+    margin-top: 16px;
+    gap: 6px;
+  }
+
+  /* Ensure no horizontal scrollbars on small devices */
+  html, body {
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Slightly smaller on very narrow devices */
+  #home h1, .hero h1, .main-title, .title, .name-title, h1 {
+    font-size: clamp(32px, 12vw, 80px);
+  }
+  .enter-portfolio {
+    width: min(92vw, 320px);
+    font-size: clamp(14px, 4.6vw, 17px);
+  }
+}
