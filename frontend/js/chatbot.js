@@ -70,7 +70,7 @@ class AIAssistant {
                     <button onclick="aiAssistant.toggleMaximize()" title="Maximize">
                         <i class="fas fa-expand"></i>
                     </button>
-                    <button onclick="aiAssistant.close()" title="Close">
+                    <button class="close-btn" onclick="aiAssistant.close()" title="Close">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>

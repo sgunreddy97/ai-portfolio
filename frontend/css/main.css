@@ -65,6 +65,9 @@ body.light-mode {
 .nav-logo {
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
 .logo-text {
@@ -1276,6 +1279,16 @@ body.light-mode .modal-content {
 }
 
 @media (max-width: 768px) {
+    /* keep navbar inset on phones */
+    .navbar {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: calc(100% - 24px);   /* 12px margin on each side */
+        border-radius: 16px;
+    }
+
+.nav-container { padding: 0 12px; }
     .nav-menu {
         position: fixed;
         top: 60px;
