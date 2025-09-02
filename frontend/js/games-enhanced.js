@@ -31,26 +31,43 @@ class EnhancedGameManager {
     }
     
     setupCanvas() {
-        // Set canvas size
+        // CSS-pixel size we want to show on screen
         const w = Math.min(window.innerWidth  * 0.96, 1024);
         const h = Math.min(window.innerHeight * 0.72,  680);
-        this.canvas.width  = w;
-        this.canvas.height = h;
-        this.canvas.style.maxWidth = '100%';
-        this.canvas.style.height   = 'auto';
-        
+
+        // Device pixel ratio for crisp rendering (cap at 2 to save perf)
+        this.dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+
+        // Set CSS size
+        this.canvas.style.width  = `${w}px`;
+        this.canvas.style.height = `${h}px`;
+
+        // Set backing store size
+        this.canvas.width  = Math.floor(w * this.dpr);
+        this.canvas.height = Math.floor(h * this.dpr);
+
+        // Reset transform then scale so all drawing uses CSS pixels
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        this.ctx.scale(this.dpr, this.dpr);
+
         // Handle resize
         window.addEventListener('resize', () => {
-            if (this.canvas) {
-                const rw = Math.min(window.innerWidth  * 0.96, 1024);
-                const rh = Math.min(window.innerHeight * 0.72,  680);
-                this.canvas.width  = rw;
-                this.canvas.height = rh;
-                this.canvas.style.maxWidth = '100%';
-                this.canvas.style.height   = 'auto';
-                if (this.currentGame && this.currentGame.resize) {
-                    this.currentGame.resize();
-                }
+            if (!this.canvas) return;
+
+            const rw = Math.min(window.innerWidth  * 0.96, 1024);
+            const rh = Math.min(window.innerHeight * 0.72,  680);
+            this.dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+
+            this.canvas.style.width  = `${rw}px`;
+            this.canvas.style.height = `${rh}px`;
+            this.canvas.width  = Math.floor(rw * this.dpr);
+            this.canvas.height = Math.floor(rh * this.dpr);
+
+            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            this.ctx.scale(this.dpr, this.dpr);
+
+            if (this.currentGame && this.currentGame.resize) {
+                this.currentGame.resize();
             }
         });
     }
@@ -891,7 +908,7 @@ class SpaceInvadersEnhanced {
         const set = (k, v) => { this.touchControls[k] = v; };
         const wire = (btn, key) => {
             if (!btn) return;
-            if (btn.dataset.bound === '1') return;   // <-- prevent duplicate bindings
+            if (btn.dataset.bound === '1') return; // guard: bind once per button
             const down = e => { e.preventDefault(); set(key, true); };
             const up   = e => { e.preventDefault(); set(key, false); };
             btn.addEventListener('pointerdown', down);
@@ -906,14 +923,16 @@ class SpaceInvadersEnhanced {
         wire(rightBtn, 'right');
         wire(fireBtn,  'fire');
 
-        // Drag finger to move horizontally (bind once per canvas)
+        // Drag finger to move horizontally (bind once on canvas)
         if (this.canvas && !this.canvas._dragBound) {
             const moveTo = (clientX) => {
                 const rect = this.canvas.getBoundingClientRect();
                 const x = clientX - rect.left;
+                // IMPORTANT: our drawing uses CSS pixels; clamp with CSS width
+                const cssW = this.canvas.width / (this.gm.dpr || this.dpr || 1);
                 this.player.x = Math.max(
-                  0,
-                  Math.min(this.canvas.width - this.player.width, x - this.player.width / 2)
+                0,
+                Math.min(cssW - this.player.width, x - this.player.width / 2)
                 );
             };
             this.canvas.addEventListener('pointermove', (e) => {
@@ -928,22 +947,45 @@ class SpaceInvadersEnhanced {
     
     createEnemies() {
         this.enemies = [];
+
+        // Work in CSS pixels (we scaled the context)
+        const dpr = this.gm.dpr || this.dpr || 1;
+        const cw = this.canvas.width  / dpr;
+        const ch = this.canvas.height / dpr;
+
         const rows = 3 + Math.floor(this.gm.gameState.level / 2);
         const cols = 8;
-        const spacing = 60;
-        const startX = (this.canvas.width - (cols * spacing)) / 2;
-        
+
+        const marginX = Math.max(12, cw * 0.06);
+        const marginY = 40;
+
+        // Space available for enemies horizontally
+        const areaW = Math.max(160, cw - marginX * 2);
+
+        // Spacing between columns; clamp to keep things readable on phones
+        const spacing = Math.max(36, Math.min(60, areaW / (cols - 1)));
+
+        // Size of each enemy relative to spacing
+        const enemyW = Math.max(24, Math.min(44, spacing * 0.6));
+        const enemyH = Math.max(16, Math.min(32, spacing * 0.45));
+
+        // Center the whole formation
+        const totalW = spacing * (cols - 1) + enemyW;
+        const startX = Math.max(marginX, (cw - totalW) / 2);
+
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < cols; col++) {
+                const x = startX + col * spacing - enemyW / 2;
+                const y = marginY + row * Math.max(36, ch * 0.07);
+
                 this.enemies.push({
-                    x: startX + col * spacing,
-                    y: 50 + row * 50,
-                    width: 40,
-                    height: 30,
+                    x, y,
+                    width: enemyW,
+                    height: enemyH,
                     type: row === 0 ? 'special' : 'normal',
                     points: row === 0 ? 50 : 10,
                     color: row === 0 ? '#ff00ff' : '#00ff00',
-                    speed: 0.5 + this.gm.gameState.level * 0.2,
+                    speed: 0.6 + this.gm.gameState.level * 0.22,
                     direction: 1
                 });
             }
@@ -1119,9 +1161,17 @@ class SpaceInvadersEnhanced {
     } 
 
     draw() {
-        // Clear canvas
-        this.ctx.fillStyle = 'rgba(0, 0, 20, 0.1)';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        // Clear correctly when using DPR scaling
+        this.ctx.save();
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.restore();
+
+        // Solid background in CSS pixels (because context is scaled)
+        const cssW = this.canvas.width  / (this.dpr || 1);
+        const cssH = this.canvas.height / (this.dpr || 1);
+        this.ctx.fillStyle = '#0a0b12';
+        this.ctx.fillRect(0, 0, cssW, cssH);
         
         // Draw particles
         this.particles.forEach(particle => {

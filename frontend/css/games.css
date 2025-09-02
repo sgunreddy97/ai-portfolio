@@ -655,46 +655,37 @@
     color: #00ffff;
 }
 
-/* ==== Mobile Controls Overlay ==== */
-#mobile-controls {
-  position: fixed;           /* overlay on the full-screen game container */
-  left: 50%;
-  bottom: clamp(12px, 3vh, 24px);
-  transform: translateX(-50%);
-  display: none;             /* shown only for Space Invaders */
-  gap: 16px;
-  z-index: 10020;
-  pointer-events: auto;
+/* ==== Responsive overrides (do not remove) ==== */
+
+/* Let the game region size naturally and scroll if needed */
+#game-play-container {
+  min-height: 72vh;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); /* room for mobile controls */
+  overflow: visible;
 }
 
-#mobile-controls .mc-btn {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: 1px solid rgba(0,255,255,0.35);
-  background: rgba(10,10,18,0.55);
-  color: #fff;
-  font-size: 20px;
-  display: grid;
-  place-items: center;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 12px rgba(0,255,255,0.15);
+/* Keep the top control bar visible while scrolling */
+.game-controls-bar {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 8px);
+  z-index: 10010;
 }
 
-#mobile-controls .mc-btn.fire {
-  width: 76px;
-  height: 76px;
-  border-color: rgba(255, 80, 80, 0.55);
-  box-shadow: 0 0 16px rgba(255,60,60,0.35);
-}
-
-@media (max-width: 768px) {
-  #mobile-controls { display: flex; }
-}
-
-/* Canvas fit tweaks for small devices */
+/* Canvas must be block-level, scale to width, and allow pointer/touch gestures */
 #game-canvas {
+  display: block;
   width: min(96vw, 1024px);
+  max-width: 100%;
   height: auto;
-  max-height: 72vh;
+  margin: 0 auto;
+  touch-action: none; /* so our pointer/touch handlers work consistently */
+}
+
+/* Mobile buttons float above the bottom safe-area */
+#mobile-controls {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+  z-index: 10020;
 }
