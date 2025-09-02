@@ -654,3 +654,47 @@
     font-size: 0.85em;
     color: #00ffff;
 }
+
+/* ==== Mobile Controls Overlay ==== */
+#mobile-controls {
+  position: fixed;           /* overlay on the full-screen game container */
+  left: 50%;
+  bottom: clamp(12px, 3vh, 24px);
+  transform: translateX(-50%);
+  display: none;             /* shown only for Space Invaders */
+  gap: 16px;
+  z-index: 10020;
+  pointer-events: auto;
+}
+
+#mobile-controls .mc-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,255,255,0.35);
+  background: rgba(10,10,18,0.55);
+  color: #fff;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 12px rgba(0,255,255,0.15);
+}
+
+#mobile-controls .mc-btn.fire {
+  width: 76px;
+  height: 76px;
+  border-color: rgba(255, 80, 80, 0.55);
+  box-shadow: 0 0 16px rgba(255,60,60,0.35);
+}
+
+@media (max-width: 768px) {
+  #mobile-controls { display: flex; }
+}
+
+/* Canvas fit tweaks for small devices */
+#game-canvas {
+  width: min(96vw, 1024px);
+  height: auto;
+  max-height: 72vh;
+}

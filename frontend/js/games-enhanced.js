@@ -32,14 +32,22 @@ class EnhancedGameManager {
     
     setupCanvas() {
         // Set canvas size
-        this.canvas.width = window.innerWidth * 0.8;
-        this.canvas.height = window.innerHeight * 0.7;
+        const w = Math.min(window.innerWidth  * 0.96, 1024);
+        const h = Math.min(window.innerHeight * 0.72,  680);
+        this.canvas.width  = w;
+        this.canvas.height = h;
+        this.canvas.style.maxWidth = '100%';
+        this.canvas.style.height   = 'auto';
         
         // Handle resize
         window.addEventListener('resize', () => {
             if (this.canvas) {
-                this.canvas.width = window.innerWidth * 0.8;
-                this.canvas.height = window.innerHeight * 0.7;
+                const rw = Math.min(window.innerWidth  * 0.96, 1024);
+                const rh = Math.min(window.innerHeight * 0.72,  680);
+                this.canvas.width  = rw;
+                this.canvas.height = rh;
+                this.canvas.style.maxWidth = '100%';
+                this.canvas.style.height   = 'auto';
                 if (this.currentGame && this.currentGame.resize) {
                     this.currentGame.resize();
                 }
@@ -104,6 +112,8 @@ class EnhancedGameManager {
         
         if (this.currentGame) {
             this.currentGame.start();
+            const mob = document.getElementById('mobile-controls');
+            if (mob) mob.style.display = (gameType === 'invaders') ? 'flex' : 'none';
             
             // Play start sound
             if (window.audioManager) {
@@ -124,9 +134,6 @@ class EnhancedGameManager {
         if (timerEl) {
             if (this.currentGame && (this.currentGame.type === 'wordpuzzle' || this.currentGame.type === 'math')) {
                 timerEl.parentElement.style.display = 'inline-flex';
-                const minutes = Math.floor(this.gameState.timer / 60);
-                const seconds = this.gameState.timer % 60;
-                timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             } else {
                 timerEl.parentElement.style.display = 'none';
             }
@@ -216,6 +223,8 @@ class EnhancedGameManager {
         const gameOverOverlay = document.getElementById('game-over');
         if (pausedOverlay) pausedOverlay.classList.add('hidden');
         if (gameOverOverlay) gameOverOverlay.classList.add('hidden');
+        const mob = document.getElementById('mobile-controls');
+        if (mob) mob.style.display = 'none';
     }
     
     gameOver() {
@@ -837,6 +846,7 @@ class SpaceInvadersEnhanced {
         
         // Controls
         this.keys = {};
+        this.touchControls = { left: false, right: false, fire: false };
         
         this.init();
     }
@@ -867,6 +877,53 @@ class SpaceInvadersEnhanced {
         
         window.addEventListener('keydown', this.handleKeyDown);
         window.addEventListener('keyup', this.handleKeyUp);
+        // Mobile buttons & touch drag on canvas
+        this.bindMobileControls();
+    }
+
+    bindMobileControls() {
+        this.touchControls = this.touchControls || { left: false, right: false, fire: false };
+
+        const leftBtn  = document.getElementById('btn-left');
+        const rightBtn = document.getElementById('btn-right');
+        const fireBtn  = document.getElementById('btn-fire');
+
+        const set = (k, v) => { this.touchControls[k] = v; };
+        const wire = (btn, key) => {
+            if (!btn) return;
+            if (btn.dataset.bound === '1') return;   // <-- prevent duplicate bindings
+            const down = e => { e.preventDefault(); set(key, true); };
+            const up   = e => { e.preventDefault(); set(key, false); };
+            btn.addEventListener('pointerdown', down);
+            btn.addEventListener('pointerup',   up);
+            btn.addEventListener('pointerleave',up);
+            btn.addEventListener('touchstart',  down, { passive: false });
+            btn.addEventListener('touchend',    up);
+            btn.dataset.bound = '1';
+        };
+
+        wire(leftBtn,  'left');
+        wire(rightBtn, 'right');
+        wire(fireBtn,  'fire');
+
+        // Drag finger to move horizontally (bind once per canvas)
+        if (this.canvas && !this.canvas._dragBound) {
+            const moveTo = (clientX) => {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = clientX - rect.left;
+                this.player.x = Math.max(
+                  0,
+                  Math.min(this.canvas.width - this.player.width, x - this.player.width / 2)
+                );
+            };
+            this.canvas.addEventListener('pointermove', (e) => {
+                if (e.pointerType !== 'mouse' && this.isRunning) moveTo(e.clientX);
+            });
+            this.canvas.addEventListener('touchmove', (e) => {
+                if (e.touches && e.touches[0]) moveTo(e.touches[0].clientX);
+            }, { passive: false });
+            this.canvas._dragBound = true;
+        }
     }
     
     createEnemies() {
@@ -926,10 +983,13 @@ class SpaceInvadersEnhanced {
     
     update() {
         // Update player
-        if (this.keys['ArrowLeft'] && this.player.x > 0) {
+        const moveLeft  = this.keys['ArrowLeft']  || this.touchControls.left;
+        const moveRight = this.keys['ArrowRight'] || this.touchControls.right;
+
+        if (moveLeft && this.player.x > 0) {
             this.player.x -= this.player.speed;
         }
-        if (this.keys['ArrowRight'] && this.player.x < this.canvas.width - this.player.width) {
+        if (moveRight && this.player.x < this.canvas.width - this.player.width) {
             this.player.x += this.player.speed;
         }
         
@@ -938,7 +998,8 @@ class SpaceInvadersEnhanced {
             this.player.shootCooldown--;
         }
         
-        if (this.keys[' '] && this.player.shootCooldown === 0) {
+        const firePressed = this.keys[' '] || this.touchControls.fire;
+        if (firePressed && this.player.shootCooldown === 0) {
             this.bullets.push({
                 x: this.player.x + this.player.width / 2 - 2,
                 y: this.player.y,
@@ -1028,7 +1089,35 @@ class SpaceInvadersEnhanced {
             this.createEnemies();
         }
     }
-    
+
+    drawPlayerShip() {
+        const ctx = this.ctx;
+        const { x, y, width, height } = this.player;
+        const cx = x + width / 2;
+
+        ctx.save();
+        // Body (triangle pointing up)
+        ctx.fillStyle = '#00ffff';
+        ctx.beginPath();
+        ctx.moveTo(cx, y);                  // nose
+        ctx.lineTo(x,  y + height);         // left base
+        ctx.lineTo(x + width, y + height);  // right base
+        ctx.closePath();
+        ctx.fill();
+
+        // Cockpit
+        ctx.fillStyle = '#80ffff';
+        ctx.fillRect(cx - 2, y + height * 0.35, 4, height * 0.25);
+
+        // Thrusters glow
+        ctx.fillStyle = 'rgba(255,160,40,0.8)';
+        ctx.beginPath();
+        ctx.arc(x + width * 0.25,  y + height, 4, 0, Math.PI, true);
+        ctx.arc(x + width * 0.75,  y + height, 4, 0, Math.PI, true);
+        ctx.fill();
+        ctx.restore();
+    } 
+
     draw() {
         // Clear canvas
         this.ctx.fillStyle = 'rgba(0, 0, 20, 0.1)';
@@ -1041,8 +1130,7 @@ class SpaceInvadersEnhanced {
         });
         
         // Draw player
-        this.ctx.fillStyle = '#00ffff';
-        this.ctx.fillRect(this.player.x, this.player.y, this.player.width, this.player.height);
+        this.drawPlayerShip();
         
         // Draw enemies
         this.enemies.forEach(enemy => {
@@ -1161,12 +1249,16 @@ class WordPuzzle {
     
     generatePuzzle() {
         const wordBank = [
-            'PYTHON', 'NEURAL', 'TENSOR', 'MODEL', 'DATA',
-            'TRAIN', 'LEARN', 'DEEP', 'CLOUD', 'CODE'
+            'PYTHON','NEURAL','TENSOR','MODEL','DATA','TRAIN','LEARN','DEEP','CLOUD','CODE',
+            'NUMPY','PANDAS','TORCH','KERAS','SCIKIT','CUDA','VECTOR','EMBEDDING','ENCODER','DECODER',
+            'TRANSFORMER','ATTENTION','GRADIENT','INFERENCE','PROMPT','DATASET','BATCH','EPOCH',
+            'REGRESSION','CLASSIFY','METRICS','ROC','AUC','LOSS','RELU','SOFTMAX','ADAM','DROPOUT','RAG','LLM',
+            'KUBERNETES','DOCKER','JENKINS','PIPELINES','MLOPS'
         ];
         
         const wordCount = Math.min(4 + Math.floor(this.gm.gameState.level / 2), 7);
-        this.words = wordBank.slice(0, wordCount);
+        const shuffled = [...wordBank].sort(() => Math.random() - 0.5);
+        this.words = shuffled.slice(0, wordCount);
         this.foundWords = [];
         this.wordPositions = {};
         
@@ -1291,6 +1383,13 @@ class WordPuzzle {
         gridEl.onmouseleave = () => this.endSelection();
         
         // Prevent text selection
+                // Touch & pen support
+        gridEl.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') this.startSelection(e); });
+        gridEl.addEventListener('pointermove', (e) => { if (e.pointerType !== 'mouse') this.continueSelection(e); });
+        gridEl.addEventListener('pointerup',   ()  => this.endSelection());
+        gridEl.addEventListener('pointerleave',()  => this.endSelection());
+        gridEl.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
+        gridEl.addEventListener('touchmove',  e => e.preventDefault(), { passive: false });
         gridEl.addEventListener('selectstart', e => e.preventDefault());
     }
     
@@ -1332,26 +1431,39 @@ class WordPuzzle {
                 this.highlightCells();
             } else if (this.selectedCells.length >= 2) {
                 // Check if it continues in the same direction
-                const first = this.selectedCells[0];
+                // Continue in the same line (horizontal / vertical / diagonal)
+                // First two cells define direction
+                const first  = this.selectedCells[0];
                 const second = this.selectedCells[1];
-                
-                const dirRow = second.row - first.row;
-                const dirCol = second.col - first.col;
-                
-                // Normalize direction
-                const normDirRow = dirRow === 0 ? 0 : dirRow / Math.abs(dirRow);
-                const normDirCol = dirCol === 0 ? 0 : dirCol / Math.abs(dirCol);
-                
-                // Check if the new cell continues in the same direction
-                const expectedRow = this.selectedCells[this.selectedCells.length - 1].row + normDirRow;
-                const expectedCol = this.selectedCells[this.selectedCells.length - 1].col + normDirCol;
-                
-                if (row === expectedRow && col === expectedCol) {
-                    // Check if already selected
-                    if (!this.selectedCells.find(c => c.row === row && c.col === col)) {
-                        this.selectedCells.push({ row, col });
-                        this.highlightCells();
+
+                const dirRow = Math.sign(second.row - first.row);
+                const dirCol = Math.sign(second.col - first.col);
+
+                // New target must be collinear with the first cell
+                const dr = row - first.row;
+                const dc = col - first.col;
+
+                const isSameRow = (dirRow === 0 && dr === 0);
+                const isSameCol = (dirCol === 0 && dc === 0);
+                const isSameDiag = (dirRow !== 0 && dirCol !== 0 && Math.abs(dr) === Math.abs(dc));
+
+                if (isSameRow || isSameCol || isSameDiag) {
+                    // Walk from the last selected cell toward the new cell, adding any skipped cells
+                    let last = this.selectedCells[this.selectedCells.length - 1];
+                    let r = last.row + dirRow;
+                    let c = last.col + dirCol;
+
+                    const until = () => (dirRow === 0 || (r - row) * dirRow <= 0) &&
+                                        (dirCol === 0 || (c - col) * dirCol <= 0);
+
+                    while (until()) {
+                        if (!this.selectedCells.find(cc => cc.row === r && cc.col === c)) {
+                            this.selectedCells.push({ row: r, col: c });
+                        }
+                        if (r === row && c === col) break;
+                        r += dirRow; c += dirCol;
                     }
+                    this.highlightCells();
                 }
             }
         }

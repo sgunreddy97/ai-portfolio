@@ -134,11 +134,18 @@
                 <button onclick="exitGame()" title="Exit (ESC)"><i class="fas fa-times"></i></button>
             </div>
         </div>
-        
+            
         <canvas id="game-canvas"></canvas>
         
+        <!-- Mobile controls (shown for Space Invaders only) -->
+        <div class="mobile-controls" id="mobile-controls" aria-label="Mobile game controls">
+          <button id="btn-left"  class="mc-btn" aria-label="Move left"><i class="fas fa-arrow-left"></i></button>
+          <button id="btn-fire"  class="mc-btn fire" aria-label="Fire"><i class="fas fa-bullseye"></i></button>
+          <button id="btn-right" class="mc-btn" aria-label="Move right"><i class="fas fa-arrow-right"></i></button>
+        </div>
+        
         <div id="game-paused" class="game-paused-overlay hidden">
-            <div class="paused-content">
+
                 <h2>Game Paused</h2>
                 <button onclick="resumeGame()">Resume</button>
                 <button onclick="restartGame()">Restart</button>
